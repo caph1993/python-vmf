@@ -123,3 +123,23 @@ def theta_arg_max(d, kappa):
     mleTheta = np.arccos(np.abs(maxCos))
     assert np.isfinite(mleTheta)
     return mleTheta
+
+
+def random_VMF_mu0(d, kappa, size=None):
+    """
+    @author: Carlos Pinzón caph1993@gmail.com
+    """
+    # parse input parameters
+    shape = () if size is None else tuple(np.ravel(size))
+    n = 1 if size is None else np.product(size)
+    # z component: radial samples perpendicular to mu0
+    z = np.random.normal(0, 1, (n, d))
+    z[:, 0] = 0
+    z /= np.linalg.norm(z, axis=1, keepdims=True)
+    # sample angles (in cos and sin form)
+    cos = _random_VMF_cos(d, kappa, n)
+    sin = np.sqrt(1 - cos**2)
+    # combine angles with the z component
+    x = z * sin[:, None]
+    x[:, 0] += cos
+    return x.reshape((*shape, d))
