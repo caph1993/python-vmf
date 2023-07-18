@@ -43,7 +43,7 @@ def random_VMF(mu, kappa, size=None):
 def _random_VMF_cos(d: int, kappa: float, n: int):
     """
     Generate n iid samples t with density function given by
-      p(t) = someConstant * (1-t**2)**((d-2)/2) * exp(kappa*t)
+      p(t) = someConstant * (1-t**2)**((d-3)/2) * exp(kappa*t)
     """
     # b = Eq. 4 of https://doi.org/10.1080/03610919408813161
     b = (d - 1) / (2 * kappa + (4 * kappa**2 + (d - 1) ** 2) ** 0.5)
